@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -26,26 +27,29 @@ class Reservation
 
     #[ORM\ManyToOne(targetEntity: Client::class)]
     #[ORM\JoinColumn(nullable: false)]
-    public Client $client;
+    private Client $client;
 
     #[ORM\ManyToOne(targetEntity: Chambre::class)]
     #[ORM\JoinColumn(nullable: false)]
-    public Chambre $chambre;
+    private Chambre $chambre;
 
     #[ORM\Column(type: 'date')]
-    public \DateTimeInterface $dateDebut;
+    private \DateTimeInterface $dateDebut;
 
     #[ORM\Column(type: 'date')]
-    public \DateTimeInterface $dateFin;
+    private \DateTimeInterface $dateFin;
 
     #[ORM\Column]
-    public string $statut = 'En attente';
+    private string $statut = 'En attente';
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    public string $prixTotal = '0.00';
+    private string $prixTotal = '0.00';
 
     #[ORM\Column(type: 'datetime')]
-    public \DateTimeInterface $dateCreation;
+    private \DateTimeInterface $dateCreation;
+
+    #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Acompte::class)]
+    private Collection $acomptes;
 
     public function __construct()
     {
@@ -55,5 +59,96 @@ class Reservation
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getClient(): Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(Client $client): self
+    {
+        $this->client = $client;
+        return $this;
+    }
+
+    public function getChambre(): Chambre
+    {
+        return $this->chambre;
+    }
+
+    public function setChambre(Chambre $chambre): self
+    {
+        $this->chambre = $chambre;
+        return $this;
+    }
+
+    public function getDateDebut(): \DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
+        return $this;
+    }
+
+    public function getDateFin(): \DateTimeInterface
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(\DateTimeInterface $dateFin): self
+    {
+        $this->dateFin = $dateFin;
+        return $this;
+    }
+
+    public function getStatut(): string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
+        return $this;
+    }
+
+    public function getPrixTotal(): string
+    {
+        return $this->prixTotal;
+    }
+
+    public function setPrixTotal(string $prixTotal): self
+    {
+        $this->prixTotal = $prixTotal;
+        return $this;
+    }
+
+    public function getDateCreation(): \DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
+        return $this;
+    }
+
+    public function getAcomptes(): Collection
+    {
+        return $this->acomptes;
+    }
+
+    public function addAcompte(Acompte $acompte): self
+    {
+        if (!$this->acomptes->contains($acompte)) {
+            $this->acomptes[] = $acompte;
+            $acompte->setReservation($this);
+        }
+        return $this;
     }
 }

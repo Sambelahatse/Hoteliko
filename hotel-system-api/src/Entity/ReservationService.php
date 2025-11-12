@@ -12,20 +12,65 @@ class ReservationService
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Reservation::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    public Reservation $reservation;
+    private Reservation $reservation;
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: ServiceSupplementaire::class)]
-    public ServiceSupplementaire $service;
+    private ServiceSupplementaire $service;
 
     #[ORM\Column]
-    public int $quantite = 1;
+    private int $quantite = 1;
 
     #[ORM\Column(type: 'datetime')]
-    public \DateTimeInterface $dateAjout;
+    private \DateTimeInterface $dateAjout;
 
     public function __construct()
     {
         $this->dateAjout = new \DateTime();
     }
+
+    public function getReservation(): Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservation $reservation): self
+    {
+        $this->reservation = $reservation;
+        return $this;
+    }
+
+    public function getService(): ServiceSupplementaire
+    {
+        return $this->service;
+    }
+
+    public function setService(ServiceSupplementaire $service): self
+    {
+        $this->service = $service;
+        return $this;
+    }
+
+    public function getQuantite(): int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+        return $this;
+    }
+
+    public function getDateAjout(): \DateTimeInterface
+    {
+        return $this->dateAjout;
+    }
+
+    public function setDateAjout(\DateTimeInterface $dateAjout): self
+    {
+        $this->dateAjout = $dateAjout;
+        return $this;
+    }
+
 }

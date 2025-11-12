@@ -32,6 +32,9 @@ when@test:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
             dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            types:
+                status: App\Type\EnumType
+                role:   App\Type\EnumType
 
 when@prod:
     doctrine:

@@ -22,22 +22,22 @@ class Client
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    public string $nom;
+    private string $nom;
 
     #[ORM\Column(length: 100)]
-    public string $prenom;
+    private string $prenom;
 
     #[ORM\Column(length: 150, unique: true, nullable: true)]
-    public ?string $email = null;
+    private ?string $email = null;
 
     #[ORM\Column(length: 20, nullable: true)]
-    public ?string $telephone = null;
+    private ?string $telephone = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    public ?string $adresse = null;
+    private ?string $adresse = null;
 
     #[ORM\Column(type: 'datetime')]
-    public \DateTimeInterface $dateCreation;
+    private \DateTimeInterface $dateCreation;
 
     public function __construct()
     {
@@ -48,4 +48,70 @@ class Client
     {
         return $this->id;
     }
+
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getDateCreation(): \DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
 }
